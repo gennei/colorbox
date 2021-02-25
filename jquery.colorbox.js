@@ -259,7 +259,7 @@
 	function trapFocus(e) {
 		if ('contains' in $box[0] && !$box[0].contains(e.target) && e.target !== $overlay[0]) {
 			e.stopPropagation();
-			$box.focus();
+			$box.trigger('focus');
 		}
 	}
 
@@ -424,7 +424,7 @@
 
 				$groupControls.add($title).hide();
 
-				$box.focus();
+				$box.trigger('focus');
 
 				if (settings.get('trapFocus')) {
 					// Confine focus to the modal
@@ -442,7 +442,7 @@
 				// Return focus on closing
 				if (settings.get('returnFocus')) {
 					$events.one(event_closed, function () {
-						$(settings.el).focus();
+						$(settings.el).trigger('focus');
 					});
 				}
 			}
@@ -533,16 +533,16 @@
 				init = true;
 
 				// Anonymous functions here keep the public method from being cached, thereby allowing them to be redefined on the fly.
-				$next.click(function () {
+				$next.on('click', function () {
 					publicMethod.next();
 				});
-				$prev.click(function () {
+				$prev.on('click', function () {
 					publicMethod.prev();
 				});
-				$close.click(function () {
+				$close.on('click', function () {
 					publicMethod.close();
 				});
-				$overlay.click(function () {
+				$overlay.on('click', function () {
 					if (settings.get('overlayClose')) {
 						publicMethod.close();
 					}
